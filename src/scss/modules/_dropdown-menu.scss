@@ -24,6 +24,7 @@ $max-height: $vs-dropdown-max-height;
   max-height: $max-height;
   min-width: $min-width;
   overflow-y: auto;
+  overflow-x: hidden;
   box-shadow: $box-shadow;
   border: $border-width $border-style $border-color;
   border-top-style: none;
