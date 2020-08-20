@@ -96,7 +96,7 @@
    * @name VueSelect
    */
   export default {
-    name: 'VSelectRenderless',
+    name: 'VueSelectRenderless',
     components: {...childComponents},
 
     mixins: [pointerScroll, typeAheadPointer, ajax],
@@ -700,6 +700,10 @@
         if (this.closeOnSelect) {
           this.open = !this.open;
           this.searchEl.blur()
+        } else {
+          // keep searchEl focus after mouse selection
+          // similary to keydown.enter selection
+          this.searchEl.focus()
         }
 
         if (this.clearSearchOnSelect) {
@@ -1272,7 +1276,7 @@
               'compositionstart': () => this.isComposing = true,
               'compositionend': () => this.isComposing = false,
               'keydown': this.onSearchKeyDown,
-              // 'blur': this.onSearchBlur,
+              'blur': this.onSearchBlur,
               // 'focus': this.onSearchFocus,
               'input': (e) => this.search = e.target.value,
             },

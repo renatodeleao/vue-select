@@ -3,6 +3,8 @@
     <v-select v-model="selected" v-bind="config" />
 asdad
     <v-select-renderless 
+      :closeOnSelect="false"
+      :clearable="false"
       v-model="selected"
       :options="config.options"
       #default="{ state, api, options, refs }"
@@ -10,7 +12,7 @@ asdad
       <div class="select-wrapper-that-wont-exist-in-vue3">
         <div v-bind="refs.combobox.attributes">
           <span 
-            v-for="(option, i) in state.selectedValue" 
+            v-for="(option, i) in selected" 
             :key="i"
           >
             {{ option }}
@@ -21,20 +23,24 @@ asdad
               :style="{
                 'position': 'absolute', 
                 'z-index': -1, 
-                'pointer-events': 'none',
-                'opacity': state.searching ? 0.4 : 1
+                'pointer-events': 'none',                
               }"
-              :value="state.selectedValue && state.selectedValue[0] && state.selectedValue[0].label" 
+              tabindex="-1"
+              :value="selected.label" 
               readonly 
+              v-show="!state.open"
             />
-            <input style="background: transparent" v-bind="refs.search.attributes" v-on="refs.search.events" />
+            <input style="background: transparent" 
+              v-bind="refs.search.attributes" 
+              v-on="refs.search.events" 
+              @click="api.toggleDropdown"
+            />
           </div>
           <button @click="api.toggleDropdown">
             open
           </button>
         </div>
         <ul 
-          v-show="state.open"
           v-bind="refs.listbox.attributes" 
           v-on="refs.listbox.events"
         >
